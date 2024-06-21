@@ -54,16 +54,46 @@ public class Main {
                  (Student::getDept,Collectors.minBy(Comparator.comparing(Student::getRank))));
         //9 .Find the student who has second rank
         String firstName = studentList.stream().sorted(Comparator.comparing(Student::getRank)).skip(2).findFirst().get().getFirstName();
-        System.out.println(firstName);
+        //System.out.println(firstName);
         //10. sorted the Student by rank
         studentList.stream().sorted(Comparator.comparing(Student::getRank)).map(Student::getRank).
                 collect(Collectors.toList());//.forEach(System.out::println);
 
-        String inpput = "ILOVEJAVATECHIE";
+        String inpput = "i love india";
 
-         Map<String,Long> output = Arrays.stream(inpput.split("")).collect(Collectors.
-                 groupingBy(Function.identity(),Collectors.counting()));
+         ArrayList output = (ArrayList) Arrays.stream(inpput.split("")).collect(Collectors.
+                 groupingBy(Function.identity(),Collectors.counting())).entrySet().
+                 stream().filter(s->!s.getKey().equalsIgnoreCase(" ")).collect(Collectors.toList());
         System.out.println(output);
+
+
+        //find duplicate elements given string
+        Arrays.stream(inpput.split("")).collect(Collectors.groupingBy
+                (Function.identity(),Collectors.counting())).entrySet().stream().
+                   filter(s->s.getValue()>1).collect(Collectors.toList());//.forEach(System.out::println);
+
+        //first Non repeat element
+         String outputs = Arrays.stream(inpput.split("")).
+                collect(Collectors.groupingBy(Function.identity(),LinkedHashMap::new,Collectors.counting()))
+                  .entrySet().stream().filter(s->s.getValue()==1).findFirst().get().getKey();
+
+        System.out.println(outputs);
+
+        int[] num = {5,9,11,2,8,21,1};
+
+       Integer in = Arrays.stream(num).boxed().sorted(Comparator.reverseOrder()).
+                      collect(Collectors.toList()).stream().skip(1).findFirst().get();
+       System.out.println(in);
+
+       String[] strArray =  {"java", "techie","springboot","microservices"};
+
+       Arrays.stream(strArray).reduce((w1,w2) -> w1.length()>w2.length()?w1:w2).get();
+
+
+
+
+
+
 
 
 
